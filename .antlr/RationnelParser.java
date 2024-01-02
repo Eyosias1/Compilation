@@ -1084,6 +1084,7 @@ public class RationnelParser extends Parser {
 		public ExprRegContext a;
 		public ExprRegContext k;
 		public ExprRegContext z;
+		public ExprRegContext exprReg;
 		public ExprRegContext b;
 		public OpContext e;
 		public OpContext op;
@@ -1136,7 +1137,7 @@ public class RationnelParser extends Parser {
 				setState(161);
 				match(T__4);
 				setState(162);
-				((ExprRegContext)_localctx).z = exprReg(0);
+				((ExprRegContext)_localctx).z = ((ExprRegContext)_localctx).exprReg = exprReg(0);
 				setState(163);
 				match(T__5);
 
@@ -1182,7 +1183,7 @@ public class RationnelParser extends Parser {
 				setState(166);
 				match(T__6);
 				setState(167);
-				((ExprRegContext)_localctx).b = exprReg(0);
+				((ExprRegContext)_localctx).b = ((ExprRegContext)_localctx).exprReg = exprReg(0);
 				setState(168);
 				match(T__7);
 
@@ -1231,7 +1232,7 @@ public class RationnelParser extends Parser {
 				setState(171);
 				match(T__8);
 				setState(172);
-				((ExprRegContext)_localctx).b = exprReg(0);
+				((ExprRegContext)_localctx).b = ((ExprRegContext)_localctx).exprReg = exprReg(0);
 				setState(173);
 				match(T__9);
 
@@ -1249,7 +1250,7 @@ public class RationnelParser extends Parser {
 				setState(176);
 				match(T__10);
 				setState(177);
-				((ExprRegContext)_localctx).a = exprReg(0);
+				((ExprRegContext)_localctx).a = ((ExprRegContext)_localctx).exprReg = exprReg(0);
 				setState(178);
 				match(T__3);
 				 ((ExprRegContext)_localctx).code =  ((ExprRegContext)_localctx).a.code;
@@ -1260,8 +1261,19 @@ public class RationnelParser extends Parser {
 				setState(181);
 				match(T__15);
 				setState(182);
-				exprReg(6);
-				;
+				((ExprRegContext)_localctx).exprReg = exprReg(6);
+
+				    ((ExprRegContext)_localctx).code = 
+				            ((ExprRegContext)_localctx).exprReg.code +
+				            "STOREG 1\n" +
+				            "STOREG 0\n" +
+				            "PUSHG 0\n" +
+				            "PUSHI 0\n" +
+				            "PUSHI 1\n" +
+				            "SUB\n" +
+				            "MUL\n" +
+				            "PUSHG 1\n" ;
+				      ;
 				}
 				break;
 			case 6:
@@ -1352,7 +1364,7 @@ public class RationnelParser extends Parser {
 						setState(216);
 						match(T__12);
 						setState(217);
-						((ExprRegContext)_localctx).b = exprReg(11);
+						((ExprRegContext)_localctx).b = ((ExprRegContext)_localctx).exprReg = exprReg(11);
 
 						              ((ExprRegContext)_localctx).code = 
 						                    // Prépare a et c pour la multiplication
@@ -1390,7 +1402,7 @@ public class RationnelParser extends Parser {
 						setState(221);
 						match(T__13);
 						setState(222);
-						((ExprRegContext)_localctx).l = exprReg(10);
+						((ExprRegContext)_localctx).l = ((ExprRegContext)_localctx).exprReg = exprReg(10);
 
 						              ((ExprRegContext)_localctx).code = 
 						                    // TODO si les deux nombre sont entier les divisier par 1 par defaut
@@ -1429,7 +1441,7 @@ public class RationnelParser extends Parser {
 						setState(226);
 						match(T__14);
 						setState(227);
-						((ExprRegContext)_localctx).b = exprReg(9);
+						((ExprRegContext)_localctx).b = ((ExprRegContext)_localctx).exprReg = exprReg(9);
 
 						              ((ExprRegContext)_localctx).code = 
 						                    // Prépare a et d pour la multiplication
@@ -1484,7 +1496,7 @@ public class RationnelParser extends Parser {
 						setState(231);
 						match(T__15);
 						setState(232);
-						((ExprRegContext)_localctx).b = exprReg(8);
+						((ExprRegContext)_localctx).b = ((ExprRegContext)_localctx).exprReg = exprReg(8);
 
 						               ((ExprRegContext)_localctx).code = 
 						                    // Prépare a et d pour la multiplication

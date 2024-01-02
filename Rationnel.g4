@@ -637,7 +637,19 @@ exprReg returns [ String code, int num, int denum ]
           "PUSHG 4\n" +  // Pousser le numérateur
           "PUSHG 5\n" ;  // Pousser le dénominateur
   }
-  | '-'exprReg {;}
+  | '-'exprReg
+    {
+    $code =
+            $exprReg.code +
+            "STOREG 1\n" +
+            "STOREG 0\n" +
+            "PUSHG 0\n" +
+            "PUSHI 0\n" +
+            "PUSHI 1\n" +
+            "SUB\n" +
+            "MUL\n" +
+            "PUSHG 1\n" ;
+      ;}
   | e=op'/'f=op'%' {$code = calcul_pourcentage($e.code, $f.code) ;}
   | 'num('c=ENTIER '/' d=ENTIER ')' {$code = "PUSHI " + $c.text + "\n"; $num = $c.int;}
   //operation exprReg
