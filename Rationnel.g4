@@ -524,61 +524,7 @@ op returns [String code]
         $code = calculerPGCD($c.code, $d.code);
       }
   | 'ppcm('c=op ',' d=op ')' {
-      $code =
-                $c.code +
-                "STOREG 4\n" + // stocker x
-                $d.code +
-                "STOREG 5\n" + // stocker n
-                /// pgcd x,n
-                // mémoire
-                // 0, 1, 2, 3, 4, 5, 6
-                // ?, ?, ?, ?, x, n, ?
-                // stocker le x et n finale
-                // entete de la pile x puis enbas n
-                "PUSHG 4\n" +
-                "STOREG 0\n" + // stocker x
-                "PUSHG 5" +
-                "STOREG 1\n" + // stocker n
-                // 0, 1, 2, 3, 4, 5, 6
-                // x, n, ?, ?, x, n, ?
-                "LABEL 8\n" +
-                "PUSHG 1\n" +
-                "JUMPF 9\n" +
-                // modulo
-                "PUSHG 1\n" + // pousse n
-                "STOREG 3\n" + // ajoute l'ancien n
-                // 0, 1, 2, 3, 4, 5, 6
-                // x, n, ?, n_ancier, x, n, ?
-                "PUSHG 0\n" + // pousse x
-                "PUSHG 1\n" + // pousse n
-                "DIV\n" +
-                "STOREG 2\n" + // on ajoute le résultat du quotient à l'adresse 2
-                // 0, 1, 2, 3, 4, 5, 6
-                // x, n, qotient, n_ancier, x, n, ?
-                "PUSHG 2\n" + // pouusse le quotion
-                "PUSHG 1\n" + // on poussse n
-                "MUL\n" + // multiplie par n
-                "STOREG 2\n" + // stocke  produit à l'adresse 3
-                // x, n, produit, n_ancier, x, n, ?
-                // x, n, quotient, produit, n_ancier, x, n
-                "PUSHG 0\n" + // on pousse x
-                "PUSHG 2\n" + // on pousse le produit
-                "SUB\n" + // on soustrait de x le produit
-                "STOREG 1\n" +
-                // x, n_nouv, produit, n_ancier, x, n, ?
-                // x, n_nouv, quotient, produit, n_ancier, x, n
-                "PUSHG 3\n" + //  // Pousse l'ancien n
-                "STOREG 0\n" + // Stocke l'ancien n dans nouveau x à l'adresse 0
-                // x_remplacer, n_nouv, produit, n_ancier, x, n, ?
-                //"PUSHI 0\n" + a voir
-                "JUMP 8\n" + // RECOMMENCER
-                "LABEL 9\n" +
-                // x_remplacer, n_nouv, produit, n_ancier, x, n, ?
-                "PUSHG 4\n" +
-                "PUSHG 5\n" +
-                "MUL\n" +
-                "PUSHG 0\n" + // le PGCD
-                "DIV\n" ;
+        $code = calculerPGCD($c.code, $d.code)
       }
   | e=op '/' f=op {$code = $e.code + $f.code;}
   | ENTIER {$code = "PUSHI " + $ENTIER.text + "\n";}
