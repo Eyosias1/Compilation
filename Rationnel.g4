@@ -637,7 +637,7 @@ exprReg returns [ String code, int num, int denum ]
           "PUSHG 4\n" +  // Pousser le numérateur
           "PUSHG 5\n" ;  // Pousser le dénominateur
   }
-  | '-'exprReg {$code  = ;}
+  | '-'exprReg {;}
   | e=op'/'f=op'%' {$code = calcul_pourcentage($e.code, $f.code) ;}
   | 'num('c=ENTIER '/' d=ENTIER ')' {$code = "PUSHI " + $c.text + "\n"; $num = $c.int;}
   //operation exprReg
@@ -660,7 +660,10 @@ op returns [String code]
     }
   | e=op '/' f=op {$code = $e.code + $f.code;}
   | ENTIER {$code = "PUSHI " + $ENTIER.text + "\n";}
-  | ID {;}
+  | ID {
+    int p = labels.get($ID.text).getAdresse();
+    $code = "PUSHG " + p + "\n";
+  }
 ;
 
 exprRegbool returns [String code]
@@ -678,13 +681,11 @@ exprRegbool returns [String code]
 
 
 TYPE : 'int' | 'reg' | 'bool';
-ID : [a-zA-Z_][a-zA-Z_0-9]*;
+ID : (('a'..'z')|('A'..'Z'))+;
 NEWLINE : '\r'? '\n';
 WS : (' '|'\t')+ -> skip;
 ENTIER : ('0'..'9')+;
 BOOLEAN : 'true' | 'false';
 FININSTRUCTIONS : ';';
 UNMATCH : . -> skip;
-
-
 //finir le programme avec une pile vide

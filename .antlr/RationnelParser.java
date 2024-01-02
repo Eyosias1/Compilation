@@ -1261,7 +1261,7 @@ public class RationnelParser extends Parser {
 				match(T__15);
 				setState(182);
 				exprReg(6);
-				((ExprRegContext)_localctx).code =  ;
+				;
 				}
 				break;
 			case 6:
@@ -1659,6 +1659,7 @@ public class RationnelParser extends Parser {
 		public OpContext c;
 		public OpContext d;
 		public Token ENTIER;
+		public Token ID;
 		public OpContext f;
 		public List<OpContext> op() {
 			return getRuleContexts(OpContext.class);
@@ -1736,8 +1737,11 @@ public class RationnelParser extends Parser {
 			case ID:
 				{
 				setState(270);
-				match(ID);
-				;
+				((OpContext)_localctx).ID = match(ID);
+
+				    int p = labels.get((((OpContext)_localctx).ID!=null?((OpContext)_localctx).ID.getText():null)).getAdresse();
+				    ((OpContext)_localctx).code =  "PUSHG " + p + "\n";
+				  
 				}
 				break;
 			default:
