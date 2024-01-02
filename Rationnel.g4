@@ -524,7 +524,7 @@ op returns [String code]
         $code = calculerPGCD($c.code, $d.code);
       }
   | 'ppcm('c=op ',' d=op ')' {
-        $code = calculerPGCD($c.code, $d.code)
+        $code = calculerPPCM($c.code, $d.code)
       }
   | e=op '/' f=op {$code = $e.code + $f.code;}
   | ENTIER {$code = "PUSHI " + $ENTIER.text + "\n";}

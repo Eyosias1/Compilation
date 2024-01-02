@@ -1165,7 +1165,7 @@ public class RationnelParser extends Parser {
 				setState(149);
 				match(T__15);
 
-				        _localctx.code = calculerPGCD(((OpContext)_localctx).c.code, ((OpContext)_localctx).d.code)
+				        _localctx.code = calculerPPCM(((OpContext)_localctx).c.code, ((OpContext)_localctx).d.code)
 				      
 				}
 				break;
