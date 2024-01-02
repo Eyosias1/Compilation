@@ -15,17 +15,16 @@ grammar Rationnel;
 @parser::members{
 
 
-    
-    /** Récupère le dictionnaire des étiquettes */
-    //public HashMap<String, Integer> getLabels() { return labels; }
-    //private HashMap<Integer, String> getTypes() { return types; }
-    //public int getProgramSize() { return instrAddress; }
+  /** La map pour mémoriser les addresses des étiquettes */
+    private HashMap<String, MonType> labels = new HashMap<String, MonType>();
+    //private HashMap<Integer, String> types = new HashMap<Integer, String>();
 
-  //HashMap<String, MonType> tablesSymboles = new HashMap<>();
-  //int comtvar = 0;
-  //int compteur_de_label = 0;
+    /** adresse instruction */
+    private int instrAddress = 8; //on commence à 8 car les précédentes cases sont réservées pour les calculs
+    private int cmp_decla = 8; //car déjà alloué 8
 
-  public class MonType {
+
+    public class MonType {
     		private String type;
     		private int adresse;
 
@@ -249,13 +248,6 @@ grammar Rationnel;
     return code;
   }
 
-  /** La map pour mémoriser les addresses des étiquettes */
-    private HashMap<String, MonType> labels = new HashMap<String, MonType>();
-    //private HashMap<Integer, String> types = new HashMap<Integer, String>();
-
-    /** adresse instruction */
-    private int instrAddress = 8; //on commence à 8 car les précédentes cases sont réservées pour les calculs
-    private int cmp_decla = 8; //car déjà alloué 8
 
 }
 
@@ -285,17 +277,16 @@ finInstruction
 ;
 
 decl returns [ String code ]
-  //@init{ $code = new String(); }
     : TYPE ID ';' {
 	if ($TYPE.text.equals("bool")){
 		$code = "PUSHI 00" + "\n";
 	}
 	else{
-		$code = "PUSHI 0" + "\n";     
-	}   
+		$code = "PUSHI 0" + "\n";
+	}
         labels.put($ID.text, new MonType($TYPE.text, instrAddress));
         instrAddress = instrAddress + 1;
-        cmp_decla += 1; 
+        cmp_decla += 1;
     }
     |TYPE
 	(ID {
@@ -303,11 +294,11 @@ decl returns [ String code ]
 			$code = "PUSHI 00" + "\n";
 		}
 		else{
-			$code = "PUSHI 0" + "\n";     
+			$code = "PUSHI 0" + "\n";
 		}
         	labels.put($ID.text, new MonType($TYPE.text, instrAddress));
         	instrAddress = instrAddress + 1;
-          cmp_decla += 1; 
+          cmp_decla += 1;
 	}
 		','
 	)*
@@ -316,16 +307,15 @@ decl returns [ String code ]
 			$code = "PUSHI 00" + "\n";
 		}
 		else{
-			$code = "PUSHI 0" + "\n";     
+			$code = "PUSHI 0" + "\n";
 		}
 		      labels.put($ID.text, new MonType($TYPE.text, instrAddress));
         	instrAddress = instrAddress + 1;
-          cmp_decla += 1; 
+          cmp_decla += 1;
 	}
 ;
 
 affect returns [String code] // à bien vérifier
-//@init{ $code = new String(); }
     : (ID '=' op ',' {
         if (labels.get($ID.text).getType().equals("int")){
 			    int p = labels.get($ID.text).getAdresse();
@@ -351,7 +341,6 @@ affect returns [String code] // à bien vérifier
 ;
 
 affectReg returns [String code]
-//@init{ $code = new String(); }
     :  (ID '=' exprReg ',' {
         int p = labels.get($ID.text).getAdresse();
         $code = $exprReg.code + "STOREG 1" + "\n" + "STOREG 0" + "PUSHG 1" + "\n"
@@ -683,7 +672,6 @@ exprRegbool returns [String code]
   |e=exprReg '<=' f=exprReg {$code = calcul_expr_reg_bool($e.code, $f.code, "INFEQ"); }
   |e=exprReg '==' f=exprReg {$code = calcul_expr_reg_bool($e.code, $f.code, "EQUAL");}
   |e=exprReg '<>' f=exprReg {$code = calcul_expr_reg_bool($e.code, $f.code, "NEQ");}
-  //|BOOLEAN { $code = "PUSHI "+ $BOOL.text }
 ;
 
 
@@ -692,7 +680,6 @@ ID : [a-zA-Z_][a-zA-Z_0-9]*;
 NEWLINE : '\r'? '\n';
 WS : (' '|'\t')+ -> skip;
 ENTIER : ('0'..'9')+;
-//RATIONNEL : ENTIER '/' ENTIER;
 BOOLEAN : 'true' | 'false';
 FININSTRUCTIONS : ';';
 UNMATCH : . -> skip;
