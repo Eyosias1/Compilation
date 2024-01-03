@@ -6,7 +6,6 @@
     import java.io.File;
 
 
-
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
@@ -24,6 +23,16 @@ public interface RationnelListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitCalcul(RationnelParser.CalculContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link RationnelParser#instruction}.
+	 * @param ctx the parse tree
+	 */
+	void enterInstruction(RationnelParser.InstructionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link RationnelParser#instruction}.
+	 * @param ctx the parse tree
+	 */
+	void exitInstruction(RationnelParser.InstructionContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link RationnelParser#finInstruction}.
 	 * @param ctx the parse tree
@@ -45,15 +54,75 @@ public interface RationnelListener extends ParseTreeListener {
 	 */
 	void exitDecl(RationnelParser.DeclContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link RationnelParser#instruction}.
+	 * Enter a parse tree produced by {@link RationnelParser#affectInt}.
 	 * @param ctx the parse tree
 	 */
-	void enterInstruction(RationnelParser.InstructionContext ctx);
+	void enterAffectInt(RationnelParser.AffectIntContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link RationnelParser#instruction}.
+	 * Exit a parse tree produced by {@link RationnelParser#affectInt}.
 	 * @param ctx the parse tree
 	 */
-	void exitInstruction(RationnelParser.InstructionContext ctx);
+	void exitAffectInt(RationnelParser.AffectIntContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link RationnelParser#affectReg}.
+	 * @param ctx the parse tree
+	 */
+	void enterAffectReg(RationnelParser.AffectRegContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link RationnelParser#affectReg}.
+	 * @param ctx the parse tree
+	 */
+	void exitAffectReg(RationnelParser.AffectRegContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link RationnelParser#affectBool}.
+	 * @param ctx the parse tree
+	 */
+	void enterAffectBool(RationnelParser.AffectBoolContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link RationnelParser#affectBool}.
+	 * @param ctx the parse tree
+	 */
+	void exitAffectBool(RationnelParser.AffectBoolContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link RationnelParser#afficher}.
+	 * @param ctx the parse tree
+	 */
+	void enterAfficher(RationnelParser.AfficherContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link RationnelParser#afficher}.
+	 * @param ctx the parse tree
+	 */
+	void exitAfficher(RationnelParser.AfficherContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link RationnelParser#boucle}.
+	 * @param ctx the parse tree
+	 */
+	void enterBoucle(RationnelParser.BoucleContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link RationnelParser#boucle}.
+	 * @param ctx the parse tree
+	 */
+	void exitBoucle(RationnelParser.BoucleContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link RationnelParser#repeterInstru}.
+	 * @param ctx the parse tree
+	 */
+	void enterRepeterInstru(RationnelParser.RepeterInstruContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link RationnelParser#repeterInstru}.
+	 * @param ctx the parse tree
+	 */
+	void exitRepeterInstru(RationnelParser.RepeterInstruContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link RationnelParser#jusqueInstru}.
+	 * @param ctx the parse tree
+	 */
+	void enterJusqueInstru(RationnelParser.JusqueInstruContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link RationnelParser#jusqueInstru}.
+	 * @param ctx the parse tree
+	 */
+	void exitJusqueInstru(RationnelParser.JusqueInstruContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link RationnelParser#exprReg}.
 	 * @param ctx the parse tree
@@ -65,6 +134,16 @@ public interface RationnelListener extends ParseTreeListener {
 	 */
 	void exitExprReg(RationnelParser.ExprRegContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link RationnelParser#bool}.
+	 * @param ctx the parse tree
+	 */
+	void enterBool(RationnelParser.BoolContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link RationnelParser#bool}.
+	 * @param ctx the parse tree
+	 */
+	void exitBool(RationnelParser.BoolContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link RationnelParser#op}.
 	 * @param ctx the parse tree
 	 */
@@ -74,6 +153,16 @@ public interface RationnelListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitOp(RationnelParser.OpContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link RationnelParser#op2}.
+	 * @param ctx the parse tree
+	 */
+	void enterOp2(RationnelParser.Op2Context ctx);
+	/**
+	 * Exit a parse tree produced by {@link RationnelParser#op2}.
+	 * @param ctx the parse tree
+	 */
+	void exitOp2(RationnelParser.Op2Context ctx);
 	/**
 	 * Enter a parse tree produced by {@link RationnelParser#exprRegbool}.
 	 * @param ctx the parse tree

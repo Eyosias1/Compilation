@@ -7,7 +7,6 @@
 
 
 
-
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
@@ -30,6 +29,18 @@ public class RationnelBaseListener implements RationnelListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitCalcul(RationnelParser.CalculContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterInstruction(RationnelParser.InstructionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitInstruction(RationnelParser.InstructionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -59,13 +70,85 @@ public class RationnelBaseListener implements RationnelListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterInstruction(RationnelParser.InstructionContext ctx) { }
+	@Override public void enterAffectInt(RationnelParser.AffectIntContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitInstruction(RationnelParser.InstructionContext ctx) { }
+	@Override public void exitAffectInt(RationnelParser.AffectIntContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterAffectReg(RationnelParser.AffectRegContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAffectReg(RationnelParser.AffectRegContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterAffectBool(RationnelParser.AffectBoolContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAffectBool(RationnelParser.AffectBoolContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterAfficher(RationnelParser.AfficherContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAfficher(RationnelParser.AfficherContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterBoucle(RationnelParser.BoucleContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitBoucle(RationnelParser.BoucleContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterRepeterInstru(RationnelParser.RepeterInstruContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitRepeterInstru(RationnelParser.RepeterInstruContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterJusqueInstru(RationnelParser.JusqueInstruContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitJusqueInstru(RationnelParser.JusqueInstruContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -83,6 +166,18 @@ public class RationnelBaseListener implements RationnelListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterBool(RationnelParser.BoolContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitBool(RationnelParser.BoolContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterOp(RationnelParser.OpContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -90,6 +185,18 @@ public class RationnelBaseListener implements RationnelListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitOp(RationnelParser.OpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterOp2(RationnelParser.Op2Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitOp2(RationnelParser.Op2Context ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
