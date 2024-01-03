@@ -408,6 +408,15 @@ afficher returns [ String code]
     }
 ;
 
+lireint returns [String code]
+  : 'lire()' {$code = "READ\n" ;}
+;
+lireReg returns [String code]
+  : 'lire()' {$code = "READ\n" + "READ\n";}
+;
+lireBool returns [String code]
+  : 'lire()' {$code = "READ\n" ;}
+;
 boucle returns [String code]
   : a=repeterInstru b=jusqueInstru {$code = $a.code + $b.code;}
 ;
@@ -699,12 +708,14 @@ exprReg returns [ String code, int num, int denum ]
   //operation exprReg
   | 'sim('e=op '/' f=op ')' {$code = simplifierRationnel($e.code, $f.code);}
   | 'denum('c=ENTIER '/' d=ENTIER ')' {$code = "PUSHI " + $d.text + "\n"; $denum = $d.int;}
+  | lireReg {$code = $lireReg.code;}
   | op {$code = $op.code;}
 ;
 
 bool returns [String code]
   : 'true' {$code = "PUSHI 1" + "\n";}
   | 'false' {$code = "PUSHI 0" + "\n";}
+  | lireBool {$code = $lireBool.code;}
   | BOOLEAN {$code = "PUSHI " + $BOOLEAN.text + "\n";}
 ;
 op returns [String code]
@@ -715,6 +726,7 @@ op returns [String code]
       $code = calculerPPCM($c.code, $d.code);
     }
   | e=op '/' f=op {$code = $e.code + $f.code;}
+  | lireint {$code = $lireint.code;}
   | ENTIER {$code = "PUSHI " + $ENTIER.text + "\n";}
   | ID {
     int p = labels.get($ID.text).getAdresse();
@@ -751,7 +763,7 @@ ID : [a-zA-Z_][a-zA-Z_0-9]*;
 NEWLINE : '\r'? '\n';
 WS : (' '|'\t')+ -> skip;
 ENTIER : ('0'..'9')+;
-BOOLEAN : 'true' | 'false';
+BOOLEAN : '0' | '1';
 FININSTRUCTIONS : ';';
 UNMATCH : . -> skip;
 //finir le programme avec une pile vide

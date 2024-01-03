@@ -1,3 +1,1 @@
-reg x;
-x = 1/4;
-x < 2/4 and x<2/1
+afficher(2/lire());
