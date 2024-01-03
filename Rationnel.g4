@@ -747,7 +747,7 @@ exprRegbool returns [String code]
 
 
 TYPE : 'int' | 'reg' | 'bool';
-ID : (('a'..'z')|('A'..'Z'))+;
+ID : [a-zA-Z_][a-zA-Z_0-9]*;
 NEWLINE : '\r'? '\n';
 WS : (' '|'\t')+ -> skip;
 ENTIER : ('0'..'9')+;
