@@ -709,6 +709,7 @@ exprReg returns [ String code, int num, int denum ]
   | 'sim('e=op '/' f=op ')' {$code = simplifierRationnel($e.code, $f.code);}
   | 'denum('c=ENTIER '/' d=ENTIER ')' {$code = "PUSHI " + $d.text + "\n"; $denum = $d.int;}
   | lireReg {$code = $lireReg.code;}
+  | op3 {$code = $op3.code;}
   | op {$code = $op.code;}
 ;
 
@@ -744,6 +745,11 @@ op2 returns [String code]
     }
   | ENTIER {$code = "PUSHI " + $ENTIER.text + "\n";}
 ;
+
+op3 returns [String code]
+  : ENTIER {$code = "PUSHI " + $ENTIER.text + "\n"+ "PUSHI 1" + "\n";}
+;
+
 exprRegbool returns [String code]
   : '(' exprRegbool ')' {$code = $exprRegbool.code;}
   |'not' d=exprRegbool {$code = "PUSHI 1\n" +  $d.code + "SUB\n";}

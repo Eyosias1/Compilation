@@ -238,6 +238,18 @@ public class RationnelBaseListener implements RationnelListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterOp3(RationnelParser.Op3Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitOp3(RationnelParser.Op3Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterExprRegbool(RationnelParser.ExprRegboolContext ctx) { }
 	/**
 	 * {@inheritDoc}

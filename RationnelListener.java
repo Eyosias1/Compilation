@@ -194,6 +194,16 @@ public interface RationnelListener extends ParseTreeListener {
 	 */
 	void exitOp2(RationnelParser.Op2Context ctx);
 	/**
+	 * Enter a parse tree produced by {@link RationnelParser#op3}.
+	 * @param ctx the parse tree
+	 */
+	void enterOp3(RationnelParser.Op3Context ctx);
+	/**
+	 * Exit a parse tree produced by {@link RationnelParser#op3}.
+	 * @param ctx the parse tree
+	 */
+	void exitOp3(RationnelParser.Op3Context ctx);
+	/**
 	 * Enter a parse tree produced by {@link RationnelParser#exprRegbool}.
 	 * @param ctx the parse tree
 	 */

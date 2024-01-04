@@ -1,1 +1,2 @@
-afficher(2/lire());
+reg x;
+x = 3/1;
