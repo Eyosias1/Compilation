@@ -21,7 +21,7 @@ grammar Rationnel;
     /** adresse instruction */
     private int instrAddress = 8; //on commence à 8 car les précédentes cases sont réservées pour les calculs
     private int cmp_decla = 8; //car déjà alloué 8
-    private int cmpt_label = 11;
+    private int cmpt_label = 20;
 
   public class MonType {
     		private String type;
