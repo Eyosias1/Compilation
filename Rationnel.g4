@@ -14,6 +14,15 @@ grammar Rationnel;
 
 @parser::members{
 
+
+  /** La map pour mémoriser les addresses des étiquettes */
+    private HashMap<String, MonType> labels = new HashMap<String, MonType>();
+
+    /** adresse instruction */
+    private int instrAddress = 8; //on commence à 8 car les précédentes cases sont réservées pour les calculs
+    private int cmp_decla = 8; //car déjà alloué 8
+    private int cmpt_label = 11;
+
   public class MonType {
     		private String type;
     		private int adresse;
@@ -183,15 +192,15 @@ grammar Rationnel;
           e_code +
           "JUMPF 13\n" + // Si e_code est faux, on saute à l'étiquette 13
           "JUMP 16\n" + // On saute à l'étiquette 16
-          "LABEL 13:\n" +
+          "LABEL 13\n" +
             f_code +
             "JUMPF 14\n" + // Si f_code est faux, on saute à l'étiquette 14
             "JUMP 15\n" + // Si e_code faux et f_code vrai, on pousse 0
-          "LABEL 14:\n" +
+          "LABEL 14\n" +
             "PUSHI 1\n" + // Si e_code et f_code est faux, on pousse 1
             "POP\n" +
             "JUMP 16" +
-          "LABEL 15:\n" +
+          "LABEL 15\n" +
             "PUSHI 0\n" +
             "POP\n" +
             "JUMP 16\n" +
@@ -200,16 +209,16 @@ grammar Rationnel;
     else if (operateur == "or") {
       code +=
               e_code +
-              "JUMPF 11\n" +
+              "JUMPF 17\n" +
               "PUSHI 1\n" +
               "JUMP 12\n" + // Si e_code est vrai, on saute à l'étiquette 12
-              "LABEL 11:\n" +
+              "LABEL 17\n" +
                 f_code +
                 "STOREG 1\n" + // on stocke la valuer boolean de f_code
                 "PUSHG 0\n" +
                 "PUSHG 1\n" +
                 "ADD\n" +
-              "LABEL 12:\n" +
+              "LABEL 12\n" +
                 "POP\n";
     }
     else {
@@ -226,7 +235,7 @@ grammar Rationnel;
                 "PUSHG 1\n"+
                 "PUSHG 3\n"+
                 "NEQ\n"+
-                "JUMPF 10\n" + //modifier là
+                "JUMPF 18\n" + //modifier là
                 "PUSHG 0\n" +
                 "PUSHG 3\n" +
                 "MUL\n" +
@@ -242,7 +251,7 @@ grammar Rationnel;
                 "PUSHG 3\n" +
                 "STOREG 1\n" +
                 // num_e, deno_e, num_f, deno_f, ?, ?,
-                "LABEL 10\n" +
+                "LABEL 18\n" +
                 "PUSHG 0\n" +
                 "PUSHG 2\n" +
                 operateur  + // on compare num_e et num_f
@@ -250,14 +259,6 @@ grammar Rationnel;
     }
     return code;
   }
-
-  /** La map pour mémoriser les addresses des étiquettes */
-    private HashMap<String, MonType> labels = new HashMap<String, MonType>();
-
-    /** adresse instruction */
-    private int instrAddress = 8; //on commence à 8 car les précédentes cases sont réservées pour les calculs
-    private int cmp_decla = 8; //car déjà alloué 8
-    private int cmpt_label = 11;
 
 }
 
@@ -287,27 +288,56 @@ finInstruction
 ;
 
 decl returns [ String code ]
+@init{ $code = new String(); }
   : TYPE ID ';' {
-		  $code += "PUSHI 0" + "\n";     
-      labels.put($ID.text, new MonType($TYPE.text, instrAddress));
-      instrAddress = instrAddress + 1;
-      cmp_decla += 1; 
+      if (($TYPE.text).equals("int") || ($TYPE.text).equals("bool")){
+		    $code += "PUSHI 0" + "\n";     
+        labels.put($ID.text, new MonType($TYPE.text, instrAddress));
+        instrAddress = instrAddress + 1;
+        cmp_decla += 1;
+      }
+      else {
+		    $code += "PUSHI 0" + "\n";     
+        labels.put($ID.text, new MonType($TYPE.text, instrAddress));
+        instrAddress = instrAddress + 2;
+        $code += "ALLOC 1\n";
+        cmp_decla += 2;
+      }
+
   }
   |TYPE (ID {
-			$code += "PUSHI 0" + "\n";     
-      labels.put($ID.text, new MonType($TYPE.text, instrAddress));
-      instrAddress = instrAddress + 1;
-      cmp_decla += 1; 
+			if (($TYPE.text).equals("int") || ($TYPE.text).equals("bool")){
+		    $code += "PUSHI 0" + "\n";     
+        labels.put($ID.text, new MonType($TYPE.text, instrAddress));
+        instrAddress = instrAddress + 1;
+        cmp_decla += 1;
+      }
+      else {
+		    $code += "PUSHI 0" + "\n";     
+        labels.put($ID.text, new MonType($TYPE.text, instrAddress));
+        instrAddress = instrAddress + 2;
+        $code += "ALLOC 1\n";
+        cmp_decla += 2;
+      }
 	} ',')* (ID) ';'{
-			$code += "PUSHI 0" + "\n";     
-		  labels.put($ID.text, new MonType($TYPE.text, instrAddress));
-      instrAddress = instrAddress + 1;
-      cmp_decla += 1; 
+			if (($TYPE.text).equals("int") || ($TYPE.text).equals("bool")){
+		    $code += "PUSHI 0" + "\n";     
+        labels.put($ID.text, new MonType($TYPE.text, instrAddress));
+        instrAddress = instrAddress + 1;
+        cmp_decla += 1;
+      }
+      else {
+		    $code += "PUSHI 0" + "\n";     
+        labels.put($ID.text, new MonType($TYPE.text, instrAddress));
+        instrAddress = instrAddress + 2;
+        $code += "ALLOC 1\n";
+        cmp_decla += 2;
+      }
 	}
 ;
 
-affectInt returns [String code] // à bien vérifier
-//@init{ $code = new String(); }
+affectInt returns [String code]
+@init{ $code = new String(); }
     : (ID '=' op2 ',' {
         if (labels.get($ID.text).getType().equals("int")){
 			    int p = labels.get($ID.text).getAdresse();
@@ -330,11 +360,12 @@ affectInt returns [String code] // à bien vérifier
 ;
 
 affectReg returns [String code]
-//@init{ $code = new String(); }
+@init{ $code = new String(); }
     :  (ID '=' exprReg ',' {
           if (labels.get($ID.text).getType().equals("reg"))
           {
             int p = labels.get($ID.text).getAdresse();
+            System.out.println(p);
             $code += $exprReg.code + "STOREG 1" + "\n" + "STOREG 0" + "\n" + "PUSHG 1" + "\n"
                   + "STOREG " + (p) + "\n" + "PUSHG 0" + "\n" + "STOREG " + (p-1) + "\n";          
           }
@@ -357,6 +388,7 @@ affectReg returns [String code]
 ;
 
 affectBool returns [String code]
+@init{ $code = new String(); }
   :  (ID '=' exprRegbool ',' {
     if (labels.get($ID.text).getType().equals("bool")){
         int p = labels.get($ID.text).getAdresse();
@@ -420,10 +452,10 @@ jusqueInstru returns [String code]
 
 instr_condit returns [ String code ]
     : exprRegbool'?' a=exprReg':' b=exprReg ';' {
-        $code = $exprRegbool.code + "JUMPF 2" + "\n" 
-        + $a.code + "POP\nPOP\n" + "JUMP 3" + "\n" 
-        + "LABEL 2" + ":" + "\n"  
-        + $b.code + "POP\nPOP\n" + "LABEL 3" + ":" + "\n";
+        $code = $exprRegbool.code + "JUMPF 19" + "\n" 
+        + $a.code + "POP\nPOP\n" + "JUMP 20" + "\n" 
+        + "LABEL 19" + ":" + "\n"  
+        + $b.code + "POP\nPOP\n" + "LABEL 20" + ":" + "\n";
     }
 ;
 
@@ -715,7 +747,8 @@ op returns [String code]
   | lireInt {$code = $lireInt.code;}
   | ENTIER {$code = "PUSHI " + $ENTIER.text + "\n";}
   | ID {  int p = labels.get($ID.text).getAdresse();
-          $code = "PUSHG " + p + "\n" ;}
+          $code = "PUSHG " + (p-1) + "\n" +
+            "PUSHG " + p + "\n";}
 ;
 
 op2 returns [String code]
@@ -761,8 +794,6 @@ UNMATCH : . -> skip;
 /*-------BUGs CONSTATES------------
 _Pour certaines parties de notre code, nous ne terminons pas avec une pile vide.
 _Ou sinon, nous terminons avec un "null" en fin de pile.
-_Sur une variable rationnelle définie, afficher write 2 fois le dénominateur plutôt que le numérateur suivi du déno.
-sinon fonctionne très bien de manière globale.
 ----------------------------------*/
 
 /*-------NON_IMPLEMENTEES----------
@@ -772,7 +803,7 @@ _Nous avons pu tout implémenter.
 ----------------------------------*/
 
 /*-------COMMENTAIRES--------------
-
+_Chaque regex prend 2places dans la pile.
 
 
 ----------------------------------*/
