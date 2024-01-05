@@ -435,7 +435,7 @@ lireBool returns [String code]
   : 'lire()' {$code = "READ\n" ;}
 ;
 boucle returns [String code]
-  : a=repeterInstru b=jusqueInstru {$code = $a.code + $b.code;}
+  : a=repeterInstru b=jusqueInstru ';' {$code = $a.code + $b.code;}
 ;
 
 repeterInstru returns [String code]
